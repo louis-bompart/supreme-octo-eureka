@@ -9,14 +9,11 @@
     <script nomodule src="https://static.cloud.coveo.com/atomic/v2/atomic.js"></script>
     <link rel="stylesheet" href="https://static.cloud.coveo.com/atomic/v2/themes/coveo.css" />
     <script type="module">
-      import {setupEngine, setupProductListing, renderProducts} from './engine.mjs';
+      import {commerceEngineConfig} from './engine.mjs';
+        await customElements.whenDefined('atomic-commerce-interface');
+        const commerceInterface = document.querySelector('atomic-commerce-interface');
 
-      const engine = await setupEngine();
-
-      await customElements.whenDefined('atomic-commerce-interface');
-      const commerceInterface = document.querySelector('atomic-commerce-interface');
-
-      await commerceInterface.initializeWithEngine(engine);
+        await commerceInterface.initialize(commerceEngineConfig);
     </script>
   </head>
 
@@ -25,11 +22,15 @@
     <main>
       <section>
         <atomic-commerce-interface type="product-listing">
-          <atomic-commerce-result-list> </atomic-commerce-result-list>
+          <atomic-commerce-query-summary></atomic-commerce-query-summary>
+          <atomic-commerce-product-list display="grid" density="compact" image-size="small">
+          </atomic-commerce-product-list>
+
+          <atomic-commerce-load-more-products></atomic-commerce-load-more-products>
+          <atomic-commerce-pager></atomic-commerce-pager>
         </atomic-commerce-interface>
       </section>
     </main>
-
 
     <script src="./commerce-nav.mjs" type="module"></script>
   </body>
